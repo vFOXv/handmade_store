@@ -1,4 +1,4 @@
-package com.ua.teamchallenge.handmade_store;
+package com.ua.teamchallenge.handmadestore;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

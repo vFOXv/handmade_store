@@ -1,4 +1,4 @@
-package com.ua.teamchallenge.handmade_store;
+package com.ua.teamchallenge.handmadestore;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
