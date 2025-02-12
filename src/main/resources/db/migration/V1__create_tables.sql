@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS users(
 
 CREATE TABLE IF NOT EXISTS roles(
                       id		BIGSERIAL PRIMARY KEY,
-                      name		VARCHAR(50) NOT NULL
+                      role_name	VARCHAR(50) NOT NULL
                       );
 
 CREATE TABLE IF NOT EXISTS users_roles(
@@ -74,8 +74,8 @@ CREATE TABLE IF NOT EXISTS orders(
 						id 		BIGSERIAL PRIMARY KEY,
 						user_id 	BIGSERIAL NOT NULL,
 						create_time TIMESTAMP DEFAULT now(),
-						is_paid 	boolean DEFAULT FALSE NOT NULL,
-						is_delivery 	boolean DEFAULT FALSE NOT NULL,
+						is_paid 	BOOLEAN DEFAULT FALSE NOT NULL,
+						is_delivery 	BOOLEAN DEFAULT FALSE NOT NULL,
 						FOREIGN KEY(user_id) REFERENCES users(id)
 						);
 
@@ -113,22 +113,30 @@ CREATE TABLE IF NOT EXISTS buskets(
 						FOREIGN KEY(item_id) REFERENCES items(id)
 						);
 
-CREATE TABLE IF NOT EXISTS confirmation_token(
+CREATE TABLE IF NOT EXISTS confirmation_tokens(
                       id BIGSERIAL PRIMARY KEY,
                       token VARCHAR(255) NOT NULL,
                       created_at TIMESTAMP NOT NULL,
                       expires_at TIMESTAMP NOT NULL,
                       confirmed_at TIMESTAMP,
-                      user_id BIGINT NOT NULL,
+                      user_id BIGSERIAL NOT NULL,
                       FOREIGN KEY (user_id) REFERENCES users(id)
                       );
 
-CREATE TABLE IF NOT EXISTS forgot_password_token(
+CREATE TABLE IF NOT EXISTS forgot_password_tokens(
                       id BIGSERIAL PRIMARY KEY,
                       token VARCHAR(255) NOT NULL,
                       created_at TIMESTAMP NOT NULL,
                       expires_at TIMESTAMP NOT NULL,
                       confirmed_at TIMESTAMP,
-                      user_id BIGINT NOT NULL,
+                      user_id BIGSERIAL NOT NULL,
+                      FOREIGN KEY (user_id) REFERENCES users(id)
+                      );
+
+CREATE TABLE IF NOT EXISTS refresh_tokens(
+                      id BIGSERIAL PRIMARY KEY,
+                      token VARCHAR(255) NOT NULL,
+                      expires_at TIMESTAMP NOT NULL,
+                      user_id BIGSERIAL NOT NULL,
                       FOREIGN KEY (user_id) REFERENCES users(id)
                       );

@@ -1,4 +1,4 @@
-INSERT INTO roles(name)
+INSERT INTO roles(role_name)
 VALUES('ROLE_USER'),
       ('ROLE_ADMIN');
 
