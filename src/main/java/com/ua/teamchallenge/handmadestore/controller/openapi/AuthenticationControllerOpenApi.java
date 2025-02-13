@@ -1,9 +1,6 @@
 package com.ua.teamchallenge.handmadestore.controller.openapi;
 
-import com.ua.teamchallenge.handmadestore.dto.AuthenticationRequest;
-import com.ua.teamchallenge.handmadestore.dto.AuthenticationResponse;
-import com.ua.teamchallenge.handmadestore.dto.RefreshTokenRequest;
-import com.ua.teamchallenge.handmadestore.dto.RefreshTokenResponse;
+import com.ua.teamchallenge.handmadestore.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -36,6 +33,26 @@ public interface AuthenticationControllerOpenApi {
     })
     AuthenticationResponse login(@Valid @RequestBody AuthenticationRequest request);
 
+    @Operation(summary = "Register a new user")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "User successfully registered, confirmation email sent",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = UserDto.class))),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Bad request. Not valid user data"),
+            @ApiResponse(
+                    responseCode = "409",
+                    description = "Username or email already exists"),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Unexpected internal error")
+    })
+    UserDto register(@Valid @RequestBody RegistrationRequestDto request);
+
     @Operation(summary = "Get new access token by refresh token")
     @ApiResponses(value = {
             @ApiResponse(
@@ -57,5 +74,5 @@ public interface AuthenticationControllerOpenApi {
                     responseCode = "500",
                     description = "Unexpected internal error")
     })
-    public RefreshTokenResponse refreshToken(@Valid @RequestBody RefreshTokenRequest request);
+    RefreshTokenResponse refreshToken(@Valid @RequestBody RefreshTokenRequest request);
 }
