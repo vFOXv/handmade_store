@@ -25,7 +25,7 @@ import java.util.Map;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
-            MethodArgumentNotValidException e,
+            @NonNull MethodArgumentNotValidException e,
             @NonNull HttpHeaders headers,
             @NonNull HttpStatusCode status,
             @NonNull WebRequest request) {
@@ -74,6 +74,24 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.error(e.getMessage(), e);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(new AppError(HttpStatus.UNAUTHORIZED.value(),
+                        LocalDateTime.now(),
+                        e.getMessage()));
+    }
+
+    @ExceptionHandler(EntityAlreadyExistsException.class)
+    public ResponseEntity<AppError> handleEntityAlreadyExistsException(EntityAlreadyExistsException e) {
+        log.error(e.getMessage(), e);
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new AppError(HttpStatus.CONFLICT.value(),
+                        LocalDateTime.now(),
+                        e.getMessage()));
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<AppError> handleException(Exception e) {
+        log.error(e.getMessage(), e);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                         LocalDateTime.now(),
                         e.getMessage()));
     }
