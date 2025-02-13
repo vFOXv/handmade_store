@@ -38,10 +38,10 @@ public class RegistrationServiceImpl implements RegistrationService {
             throw new EntityAlreadyExistsException(String.format(DUPLICATE_EMAIL, request.getEmail()));
         }
 
-        Role roleUser = roleRepository.findByRoleName(ROLE_USER)
+        Role defaultRole = roleRepository.findByRoleName(ROLE_USER)
                 .orElseThrow(() -> new EntityNotFoundException(String.format(ROLE_NOT_FOUND, ROLE_USER)));
         Set<Role> roles = new HashSet<>();
-        roles.add(roleUser);
+        roles.add(defaultRole);
 
         User user = User.builder()
                 .username(request.getUsername())
@@ -51,6 +51,7 @@ public class RegistrationServiceImpl implements RegistrationService {
                 .isEnabled(false)
                 .build();
 
+        //todo add method for sending confirmation email
         //  sendConfirmationEmail(request.getEmail());
         return userMapper.toUserDto(userRepository.save(user));
     }
