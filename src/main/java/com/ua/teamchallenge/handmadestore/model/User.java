@@ -1,10 +1,8 @@
 package com.ua.teamchallenge.handmadestore.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +15,7 @@ import java.util.stream.Collectors;
 @Table(name = "users")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {
@@ -27,6 +26,7 @@ public class User implements UserDetails {
     @Column(name = "username", unique = true, nullable = false)
     private String username;
 
+    @JsonIgnore
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -34,7 +34,7 @@ public class User implements UserDetails {
     private String email;
 
     @Column(name = "is_enabled", nullable = false)
-    private boolean isEnabled = false;
+    private boolean isEnabled;
 
     @ManyToMany
     @JoinTable(name = "users_roles",
