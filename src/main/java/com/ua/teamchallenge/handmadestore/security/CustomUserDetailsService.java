@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import static com.ua.teamchallenge.handmadestore.util.ServiceConstants.USER_NOT_FOUND;
+import static com.ua.teamchallenge.handmadestore.util.ServiceConstants.USER_NOT_FOUND_BY_USERNAME;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +17,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         return userRepository.findByUsernameIgnoreCase(username)
-                .orElseThrow(() -> new EntityNotFoundException(String.format(USER_NOT_FOUND, username)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format(USER_NOT_FOUND_BY_USERNAME, username)));
     }
 }
