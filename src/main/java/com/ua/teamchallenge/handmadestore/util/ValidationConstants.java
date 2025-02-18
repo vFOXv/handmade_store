@@ -1,6 +1,9 @@
 package com.ua.teamchallenge.handmadestore.util;
 
 public class ValidationConstants {
+    private ValidationConstants() {
+    }
+
     public static final String USERNAME_REQUIRED = "Username is required";
     public static final String PASSWORD_REQUIRED = "Password is required";
     public static final String REPEAT_PASSWORD_REQUIRED = "Repeat password is required";

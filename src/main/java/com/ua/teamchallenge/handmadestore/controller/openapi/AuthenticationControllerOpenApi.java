@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "Authentication Controller", description = "API to work with authentication")
 public interface AuthenticationControllerOpenApi {
@@ -52,6 +53,34 @@ public interface AuthenticationControllerOpenApi {
                     description = "Unexpected internal error")
     })
     UserDto register(@Valid @RequestBody RegistrationRequestDto request);
+
+    @Operation(summary = "Email Verification")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Email successfully confirmed"),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Token has expired"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Token not found"),
+            @ApiResponse(
+                    responseCode = "409",
+                    description = "Email is already verified")
+    })
+    void confirm(@RequestParam("token") String token);
+
+    @Operation(summary = "Resend message for email verification")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Email sent successfully"),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Failed to send email message"),
+    })
+    void resendConfirmationEmail(@RequestBody EmailRequestDto request);
 
     @Operation(summary = "Get new access token by refresh token")
     @ApiResponses(value = {

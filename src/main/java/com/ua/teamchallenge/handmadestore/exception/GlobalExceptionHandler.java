@@ -24,7 +24,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+    protected @NonNull ResponseEntity<Object> handleMethodArgumentNotValid(
             @NonNull MethodArgumentNotValidException e,
             @NonNull HttpHeaders headers,
             @NonNull HttpStatusCode status,
@@ -83,6 +83,33 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.error(e.getMessage(), e);
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(new AppError(HttpStatus.CONFLICT.value(),
+                        LocalDateTime.now(),
+                        e.getMessage()));
+    }
+
+    @ExceptionHandler(TokenAlreadyConfirmedException.class)
+    public ResponseEntity<AppError> handleTokenAlreadyConfirmedException(TokenAlreadyConfirmedException e) {
+        log.error(e.getMessage(), e);
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new AppError(HttpStatus.CONFLICT.value(),
+                        LocalDateTime.now(),
+                        e.getMessage()));
+    }
+
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity<AppError> handleTokenExpiredException(TokenExpiredException e) {
+        log.error(e.getMessage(), e);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(new AppError(HttpStatus.FORBIDDEN.value(),
+                        LocalDateTime.now(),
+                        e.getMessage()));
+    }
+
+    @ExceptionHandler(FailedToSendEmailException.class)
+    public ResponseEntity<AppError> handleFailedToSendEmailException(FailedToSendEmailException e) {
+        log.error(e.getMessage(), e);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                         LocalDateTime.now(),
                         e.getMessage()));
     }

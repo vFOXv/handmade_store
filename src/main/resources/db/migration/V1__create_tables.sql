@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS confirmation_tokens(
                       FOREIGN KEY (user_id) REFERENCES users(id)
                       );
 
-CREATE TABLE IF NOT EXISTS forgot_password_tokens(
+CREATE TABLE IF NOT EXISTS reset_password_tokens(
                       id BIGSERIAL PRIMARY KEY,
                       token VARCHAR(255) NOT NULL,
                       created_at TIMESTAMP NOT NULL,
