@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -67,7 +68,10 @@ public interface AuthenticationControllerOpenApi {
                     description = "Token not found"),
             @ApiResponse(
                     responseCode = "409",
-                    description = "Email is already verified")
+                    description = "Email is already verified"),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Unexpected internal error")
     })
     void confirm(@RequestParam("token") String token);
 
@@ -104,4 +108,53 @@ public interface AuthenticationControllerOpenApi {
                     description = "Unexpected internal error")
     })
     RefreshTokenResponse refreshToken(@Valid @RequestBody RefreshTokenRequest request);
+
+    @Operation(summary = "Send reset password email")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successfully sent reset password email"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "User not found"),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Failed to send email message")
+    })
+    void sendResetPasswordEmail(@Valid @RequestBody EmailRequestDto emailRequestDto);
+
+    @Operation(summary = "Redirect to reset password page")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "302",
+                    description = "Successfully redirected to reset password page"),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Failed to send email message")
+    })
+    ResponseEntity<Void> redirectToResetPasswordPage(@RequestParam("token") String token);
+
+    @Operation(summary = "Reset user password and set new one")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Password successfully changed"),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Bad request. Missing required parameters"),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Token has expired"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Token not found"),
+            @ApiResponse(
+                    responseCode = "409",
+                    description = "Token has already been used"),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Unexpected internal error")
+    })
+    void resetPassword(@Valid @RequestBody ChangePasswordRequest request,
+                       @RequestParam("token") String token);
 }
