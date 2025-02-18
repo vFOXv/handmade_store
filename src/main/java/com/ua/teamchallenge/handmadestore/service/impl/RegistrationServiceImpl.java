@@ -5,16 +5,21 @@ import com.ua.teamchallenge.handmadestore.dto.UserDto;
 import com.ua.teamchallenge.handmadestore.exception.EntityAlreadyExistsException;
 import com.ua.teamchallenge.handmadestore.exception.EntityNotFoundException;
 import com.ua.teamchallenge.handmadestore.mapper.UserMapper;
+import com.ua.teamchallenge.handmadestore.model.ConfirmationToken;
 import com.ua.teamchallenge.handmadestore.model.Role;
 import com.ua.teamchallenge.handmadestore.model.User;
 import com.ua.teamchallenge.handmadestore.repository.RoleRepository;
 import com.ua.teamchallenge.handmadestore.repository.UserRepository;
+import com.ua.teamchallenge.handmadestore.service.ConfirmationTokenService;
+import com.ua.teamchallenge.handmadestore.service.EmailSenderService;
 import com.ua.teamchallenge.handmadestore.service.RegistrationService;
+import com.ua.teamchallenge.handmadestore.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,6 +32,9 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
+    private final EmailSenderService emailSenderService;
+    private final ConfirmationTokenService confirmationTokenService;
+    private final UserService userService;
 
     @Override
     @Transactional
@@ -51,8 +59,24 @@ public class RegistrationServiceImpl implements RegistrationService {
                 .isEnabled(false)
                 .build();
 
-        //todo add method for sending confirmation email
-        //  sendConfirmationEmail(request.getEmail());
-        return userMapper.toUserDto(userRepository.save(user));
+        User savedUser = userRepository.save(user);
+        emailSenderService.sendConfirmationEmail(savedUser.getEmail());
+        return userMapper.toUserDto(savedUser);
+    }
+
+    @Override
+    @Transactional
+    public void confirmToken(String token) {
+        ConfirmationToken confirmationToken = confirmationTokenService.getConfirmationToken(token);
+        confirmationTokenService.validateConfirmationToken(confirmationToken);
+
+        confirmationToken.setConfirmedAt(LocalDateTime.now());
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+        userService.enableUser(confirmationToken.getUser());
+    }
+
+    @Override
+    public void resendConfirmationEmail(String email) {
+        emailSenderService.sendConfirmationEmail(email);
     }
 }

@@ -24,4 +24,10 @@ public class UserServiceImpl implements UserService {
                         email.toLowerCase())));
         return userMapper.toUserDto(user);
     }
+
+    @Override
+    public void enableUser(User user) {
+        user.setEnabled(true);
+        userRepository.save(user);
+    }
 }

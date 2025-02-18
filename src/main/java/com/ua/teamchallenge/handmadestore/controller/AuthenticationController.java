@@ -28,6 +28,18 @@ public class AuthenticationController implements AuthenticationControllerOpenApi
         return registrationService.register(request);
     }
 
+    @GetMapping("/confirm")
+    @ResponseStatus(HttpStatus.OK)
+    public void confirm(@RequestParam("token") String token) {
+        registrationService.confirmToken(token);
+    }
+
+    @PostMapping("/resend-email-confirmation")
+    @ResponseStatus(HttpStatus.OK)
+    public void resendConfirmationEmail(@Valid @RequestBody EmailRequestDto emailRequestDto) {
+        registrationService.resendConfirmationEmail(emailRequestDto.getEmail());
+    }
+
     @PostMapping("/refresh-token")
     @ResponseStatus(HttpStatus.OK)
     public RefreshTokenResponse refreshToken(@Valid @RequestBody RefreshTokenRequest request) {
