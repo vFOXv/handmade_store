@@ -1,9 +1,6 @@
 package com.ua.teamchallenge.handmadestore.util;
 
 public class ServiceConstants {
-    private ServiceConstants() {
-    }
-
     public static final String USER_NOT_FOUND_BY_USERNAME = "Can't find user by username: %s";
     public static final String USER_NOT_FOUND_BY_EMAIL = "Can't find user by email: %s";
     public static final String REFRESH_TOKEN_EXPIRED = "Refresh token has expired";
@@ -18,4 +15,6 @@ public class ServiceConstants {
     public static final String EMAIL_ALREADY_CONFIRMED = "Email '%s' is already confirmed";
     public static final String TOKEN_EXPIRED = "Token has expired";
     public static final String TOKEN_ALREADY_USED = "Token has already been used";
+    private ServiceConstants() {
+    }
 }

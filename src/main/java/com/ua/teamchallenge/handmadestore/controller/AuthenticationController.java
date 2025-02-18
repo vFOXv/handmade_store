@@ -17,14 +17,12 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("${api.base-resource-path}/auth")
 public class AuthenticationController implements AuthenticationControllerOpenApi {
+    private static final String TOKEN_RESET_PASSWORD_URL = "/auth/reset-pass?token=";
     private final AuthenticationService authenticationService;
     private final RegistrationService registrationService;
     private final EmailSenderService emailSenderService;
-
     @Value("${api.frontend-base-url}")
     private String apiFrontendBaseUrl;
-
-    private static final String TOKEN_RESET_PASSWORD_URL = "/auth/reset-pass?token=";
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)

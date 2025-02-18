@@ -1,9 +1,6 @@
 package com.ua.teamchallenge.handmadestore.util;
 
 public class ValidationConstants {
-    private ValidationConstants() {
-    }
-
     public static final String USERNAME_REQUIRED = "Username is required";
     public static final String PASSWORD_REQUIRED = "Password is required";
     public static final String REPEAT_PASSWORD_REQUIRED = "Repeat password is required";
@@ -16,4 +13,6 @@ public class ValidationConstants {
     public static final String EMAIL_VALIDATION_MESSAGE = "Not valid email";
     public static final String PASSWORDS_VALIDATION_MESSAGE = "Your password must contain upper and lower case " +
             "letters and numbers, at least 7 and maximum 30 characters.";
+    private ValidationConstants() {
+    }
 }
