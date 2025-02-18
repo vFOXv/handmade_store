@@ -7,5 +7,8 @@ import com.ua.teamchallenge.handmadestore.dto.RefreshTokenResponse;
 
 public interface AuthenticationService {
     AuthenticationResponse authenticate(AuthenticationRequest request);
+
     RefreshTokenResponse refreshToken(RefreshTokenRequest request);
+
+    void resetPassword(String newPassword, String token);
 }

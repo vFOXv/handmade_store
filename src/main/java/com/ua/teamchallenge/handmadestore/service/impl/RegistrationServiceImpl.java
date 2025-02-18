@@ -74,9 +74,4 @@ public class RegistrationServiceImpl implements RegistrationService {
         confirmationTokenService.saveConfirmationToken(confirmationToken);
         userService.enableUser(confirmationToken.getUser());
     }
-
-    @Override
-    public void resendConfirmationEmail(String email) {
-        emailSenderService.sendConfirmationEmail(email);
-    }
 }
