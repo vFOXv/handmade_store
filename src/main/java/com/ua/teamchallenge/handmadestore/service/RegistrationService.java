@@ -7,6 +7,4 @@ public interface RegistrationService {
     UserDto register(RegistrationRequestDto request);
 
     void confirmToken(String token);
-
-    void resendConfirmationEmail(String email);
 }
