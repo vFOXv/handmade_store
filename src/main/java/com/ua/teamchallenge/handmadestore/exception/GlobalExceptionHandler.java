@@ -24,7 +24,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+    protected @NonNull ResponseEntity<Object> handleMethodArgumentNotValid(
             @NonNull MethodArgumentNotValidException e,
             @NonNull HttpHeaders headers,
             @NonNull HttpStatusCode status,
