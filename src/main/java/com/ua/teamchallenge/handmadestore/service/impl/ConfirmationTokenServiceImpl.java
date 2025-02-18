@@ -1,5 +1,6 @@
 package com.ua.teamchallenge.handmadestore.service.impl;
 
+import com.ua.teamchallenge.handmadestore.exception.EntityNotFoundException;
 import com.ua.teamchallenge.handmadestore.exception.TokenAlreadyConfirmedException;
 import com.ua.teamchallenge.handmadestore.exception.TokenExpiredException;
 import com.ua.teamchallenge.handmadestore.model.ConfirmationToken;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import static com.ua.teamchallenge.handmadestore.util.ServiceConstants.*;
@@ -33,7 +33,7 @@ public class ConfirmationTokenServiceImpl implements ConfirmationTokenService {
     @Override
     public ConfirmationToken getConfirmationToken(String token) {
         return confirmationTokenRepository.findByToken(token)
-                .orElseThrow(() -> new NoSuchElementException(TOKEN_NOT_FOUND));
+                .orElseThrow(() -> new EntityNotFoundException(TOKEN_NOT_FOUND));
     }
 
     @Override

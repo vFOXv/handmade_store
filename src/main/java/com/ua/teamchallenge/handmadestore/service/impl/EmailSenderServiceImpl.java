@@ -8,6 +8,7 @@ import com.ua.teamchallenge.handmadestore.model.User;
 import com.ua.teamchallenge.handmadestore.model.enums.EmailSubject;
 import com.ua.teamchallenge.handmadestore.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -23,6 +24,12 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     private final UserService userService;
     private final UserMapper userMapper;
     private final TemplateEngine htmlTemplateEngine;
+
+    @Value("${api.backend-base-url}")
+    private String apiBackendBaseUrl;
+
+    @Value("${api.base-resource-path}")
+    private String apiBaseResourcePath;
 
     @Override
     public void sendConfirmationEmail(String email) {
@@ -55,7 +62,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     private String buildEmailContent(String username, String token, EmailSubject subject) {
         Context ctx = new Context();
         ctx.setVariable("username", username);
-        ctx.setVariable("url", subject.getUrl() + token);
+        ctx.setVariable("url", apiBackendBaseUrl + apiBaseResourcePath + subject.getPath() + token);
 
         return htmlTemplateEngine.process(subject.getTemplate(), ctx);
     }
