@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS users_roles(
 
 CREATE TABLE IF NOT EXISTS categories(
 						id 		BIGSERIAL PRIMARY KEY,
-						category_name	VARCHAR(50)
+						category_name	VARCHAR(50) NOT NULL
 						);
 
 CREATE TABLE IF NOT EXISTS materials(
