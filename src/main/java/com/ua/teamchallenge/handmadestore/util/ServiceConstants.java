@@ -15,6 +15,11 @@ public class ServiceConstants {
     public static final String EMAIL_ALREADY_CONFIRMED = "Email '%s' is already confirmed";
     public static final String TOKEN_EXPIRED = "Token has expired";
     public static final String TOKEN_ALREADY_USED = "Token has already been used";
+    public static final String CATEGORY_NOT_FOUND_BY_ID = "Category isn't found by id: %s";
+    public static final String MATERIAL_NOT_FOUND_BY_ID = "Material isn't found by id: %s";
+    public static final String STYLE_NOT_FOUND_BY_ID = "Style isn't found by id: %s";
+    public static final String COLOR_NOT_FOUND_BY_ID = "Color isn't found by id: %s";
+
     private ServiceConstants() {
     }
 }

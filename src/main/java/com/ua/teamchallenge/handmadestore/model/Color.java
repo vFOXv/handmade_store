@@ -4,18 +4,17 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "materials")
+@Table(name = "colors")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Material {
+public class Color {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "material_name", unique = true, nullable = false)
-    private String materialName;
-
+    @Column(name = "color_name", unique = true, nullable = false)
+    private String styleName;
 }

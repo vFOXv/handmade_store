@@ -3,7 +3,7 @@ package com.ua.teamchallenge.handmadestore.dto;
 import lombok.Data;
 
 @Data
-public class MaterialDto {
+public class StyleDto {
     private Long id;
-    private String materialName;
+    private String styleName;
 }

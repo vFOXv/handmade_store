@@ -10,12 +10,11 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Material {
+public class Style {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "material_name", unique = true, nullable = false)
-    private String materialName;
-
+    @Column(name = "style_name", unique = true, nullable = false)
+    private String styleName;
 }
