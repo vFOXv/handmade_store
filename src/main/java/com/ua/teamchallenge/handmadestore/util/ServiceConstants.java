@@ -19,6 +19,7 @@ public class ServiceConstants {
     public static final String MATERIAL_NOT_FOUND_BY_ID = "Material isn't found by id: %s";
     public static final String STYLE_NOT_FOUND_BY_ID = "Style isn't found by id: %s";
     public static final String COLOR_NOT_FOUND_BY_ID = "Color isn't found by id: %s";
+    public static final String ITEM_NOT_FOUND_BY_ID = "Item isn't found by id: %s";
 
     private ServiceConstants() {
     }

@@ -3,6 +3,8 @@ package com.ua.teamchallenge.handmadestore.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "materials")
 @Getter
@@ -17,4 +19,7 @@ public class Style {
 
     @Column(name = "style_name", unique = true, nullable = false)
     private String styleName;
+
+    @OneToMany(mappedBy = "stile", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private List<Item> items;
 }
