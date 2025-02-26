@@ -33,6 +33,7 @@ public class ColorServiceImpl {
 
     public ColorDto findById(Long id){
         Color color = colorRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(String.format(STYLE_NOT_FOUND_BY_ID + id)));;
+                .orElseThrow(() -> new EntityNotFoundException(String.format(STYLE_NOT_FOUND_BY_ID + id)));
+        return colorMapper.toColorDto(color);
     }
 }

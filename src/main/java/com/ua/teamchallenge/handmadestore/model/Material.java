@@ -1,5 +1,6 @@
 package com.ua.teamchallenge.handmadestore.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class Material {
     private String materialName;
 
     @OneToMany(mappedBy = "material", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @JsonManagedReference // Эта сторона будет сериализована
     private List<Item> items;
 
 }

@@ -1,5 +1,6 @@
 package com.ua.teamchallenge.handmadestore.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +23,16 @@ public class Item {
 
     private String description;
     @ManyToOne
-    @JoinColumn(name="id")
+    @JoinColumn(name="id",insertable = false, updatable = false)
+    @JsonBackReference // Эта сторона не будет сериализована
     private Category category;
     @ManyToOne
-    @JoinColumn(name="id")
+    @JoinColumn(name="id", insertable = false, updatable = false)
+    @JsonBackReference // Эта сторона не будет сериализована
     private Material material;
     @ManyToOne
-    @JoinColumn(name="id")
+    @JoinColumn(name="id", insertable = false, updatable = false)
+    @JsonBackReference // Эта сторона не будет сериализована
     private Style style;
     private Double price;
     private int discount;

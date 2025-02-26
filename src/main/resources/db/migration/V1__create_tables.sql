@@ -59,7 +59,7 @@ CREATE TABLE items_colors(
 						color_id 	BIGSERIAL NOT NULL,
 						quantity 	INT NOT NULL,
 						FOREIGN KEY(item_id) REFERENCES items(id),
-						FOREIGN KEY(color_id) REFERENCES items(id)
+						FOREIGN KEY(color_id) REFERENCES colors(id)
 						);
 
 CREATE TABLE IF NOT EXISTS liked_products(
