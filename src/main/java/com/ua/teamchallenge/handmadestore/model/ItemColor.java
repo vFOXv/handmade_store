@@ -1,5 +1,6 @@
 package com.ua.teamchallenge.handmadestore.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import jakarta.persistence.JoinColumn;
@@ -20,6 +21,7 @@ public class ItemColor {
 
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
+    @JsonManagedReference // Эта сторона будет сериализована
     private Item item;
 
     @ManyToOne

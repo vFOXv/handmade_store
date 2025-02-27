@@ -4,6 +4,7 @@ import com.ua.teamchallenge.handmadestore.dto.ItemDto;
 import com.ua.teamchallenge.handmadestore.exception.EntityNotFoundException;
 import com.ua.teamchallenge.handmadestore.mapper.ItemMapper;
 import com.ua.teamchallenge.handmadestore.model.Item;
+import com.ua.teamchallenge.handmadestore.repository.ItemColorRepository;
 import com.ua.teamchallenge.handmadestore.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,15 +18,20 @@ public class ItemServise {
 
     private final ItemRepository itemRepository;
     private final ItemMapper itemMapper;
+    private final ItemColorRepository itemColorRepository;
 
 
-    public ItemServise(ItemRepository itemRepository, ItemMapper itemMapper) {
+    public ItemServise(ItemRepository itemRepository, ItemMapper itemMapper, ItemColorRepository itemColorRepository) {
         this.itemRepository = itemRepository;
         this.itemMapper = itemMapper;
+        this.itemColorRepository = itemColorRepository;
     }
 
     public List<ItemDto> findAll(){
         List<Item> items = itemRepository.findAll();
+        for(Item item : items){
+            itemColorRepository.findByItemId(item.getId());
+        }
         List<ItemDto> itemsDto = new ArrayList<>();
         for(Item item : items){
             itemsDto.add(itemMapper.toItemDto(item));

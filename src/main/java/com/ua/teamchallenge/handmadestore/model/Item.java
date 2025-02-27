@@ -39,8 +39,16 @@ public class Item {
     private Style style;
     private Double price;
     private int discount;
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemColor> itemColors = new ArrayList<>();
+//    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonBackReference // Эта сторона не будет сериализована
+//    private List<ItemColor> itemColors = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+        name = "item_colors",
+        joinColumns = @JoinColumn(name = "item_id"),
+        inverseJoinColumns = @JoinColumn(name = "color_id")
+    )
+    private List<ItemColor> colors = new ArrayList<>();
 
     //Discount can't be <0% and >100%
     public void setDiscount(int discount) {
