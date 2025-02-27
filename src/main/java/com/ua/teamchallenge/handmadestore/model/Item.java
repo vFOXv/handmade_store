@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "items")
 @Getter
@@ -36,6 +39,8 @@ public class Item {
     private Style style;
     private Double price;
     private int discount;
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItemColor> itemColors = new ArrayList<>();
 
     //Discount can't be <0% and >100%
     public void setDiscount(int discount) {
