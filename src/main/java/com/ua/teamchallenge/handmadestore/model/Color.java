@@ -1,5 +1,6 @@
 package com.ua.teamchallenge.handmadestore.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,8 +20,14 @@ public class Color {
     private Long id;
 
     @Column(name = "color_name", unique = true, nullable = false)
-    private String styleName;
+    private String colorName;
 
-    @OneToMany(mappedBy = "color", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemColor> itemColors = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "item_colors",
+            joinColumns = @JoinColumn(name = "color_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id")
+    )
+    @JsonManagedReference // Эта сторона будет сериализована
+    private List<Item> items = new ArrayList<>();
 }

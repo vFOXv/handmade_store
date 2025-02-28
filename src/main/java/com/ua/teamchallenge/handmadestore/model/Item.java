@@ -3,7 +3,7 @@ package com.ua.teamchallenge.handmadestore.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,13 +42,14 @@ public class Item {
 //    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
 //    @JsonBackReference // Эта сторона не будет сериализована
 //    private List<ItemColor> itemColors = new ArrayList<>();
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
         name = "item_colors",
         joinColumns = @JoinColumn(name = "item_id"),
         inverseJoinColumns = @JoinColumn(name = "color_id")
     )
-    private List<ItemColor> colors = new ArrayList<>();
+    @JsonBackReference // Эта сторона не будет сериализована
+    private List<Color> colors = new ArrayList<>();
 
     //Discount can't be <0% and >100%
     public void setDiscount(int discount) {
