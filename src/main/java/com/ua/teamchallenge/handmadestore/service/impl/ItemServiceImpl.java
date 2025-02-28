@@ -25,7 +25,7 @@ public class ItemServiceImpl {
     }
 
     public List<ItemDto> findAll(){
-        List<Item> items = itemRepository.findAll();
+        List<Item> items = itemRepository.findAllItems();
 
         List<ItemDto> itemsDto = new ArrayList<>();
         for(Item item : items){

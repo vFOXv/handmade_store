@@ -1,6 +1,7 @@
 package com.ua.teamchallenge.handmadestore.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -44,11 +45,12 @@ public class Item {
 //    private List<ItemColor> itemColors = new ArrayList<>();
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
-        name = "item_colors",
+        name = "items_colors",
         joinColumns = @JoinColumn(name = "item_id"),
         inverseJoinColumns = @JoinColumn(name = "color_id")
     )
-    @JsonBackReference // Эта сторона не будет сериализована
+    //@JsonBackReference // Эта сторона не будет сериализована
+    @JsonManagedReference // Эта сторона будет сериализована
     private List<Color> colors = new ArrayList<>();
 
     //Discount can't be <0% and >100%
