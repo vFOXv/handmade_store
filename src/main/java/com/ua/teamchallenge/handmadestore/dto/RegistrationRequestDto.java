@@ -17,7 +17,6 @@ import static com.ua.teamchallenge.handmadestore.util.ValidationRegExp.*;
 @AllArgsConstructor
 @Schema(description = "Dto for registration new user")
 public class RegistrationRequestDto {
-
     @NotBlank(message = USERNAME_REQUIRED)
     @Pattern(regexp = USERNAME_REGEXP, message = USERNAME_VALIDATION_MESSAGE)
     @Schema(description = "Username", example = "User1")

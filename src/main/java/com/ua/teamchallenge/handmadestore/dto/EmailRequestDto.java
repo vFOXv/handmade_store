@@ -16,7 +16,6 @@ import static com.ua.teamchallenge.handmadestore.util.ValidationRegExp.EMAIL_REG
 @AllArgsConstructor
 @Schema(description = "Dto for resend email confirmation")
 public class EmailRequestDto {
-
     @NotBlank(message = EMAIL_REQUIRED)
     @Pattern(regexp = EMAIL_REGEXP, message = EMAIL_VALIDATION_MESSAGE)
     @Schema(description = "User email", example = "johndoe@gmail.com")

@@ -24,24 +24,20 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     private final UserService userService;
     private final UserMapper userMapper;
     private final TemplateEngine htmlTemplateEngine;
-
     @Value("${api.backend-base-url}")
     private String apiBackendBaseUrl;
-
     @Value("${api.base-resource-path}")
     private String apiBaseResourcePath;
 
     @Override
     public void sendConfirmationEmail(String email) {
         User user = userMapper.toUser(userService.getUserByEmail(email));
-
         if (user.isEnabled()) {
             throw new TokenAlreadyConfirmedException(String.format(EMAIL_ALREADY_CONFIRMED, email.toLowerCase()));
         }
 
         ConfirmationToken confirmationToken = confirmationTokenService.generateConfirmationToken(user);
         String token = confirmationTokenService.saveConfirmationToken(confirmationToken);
-
         String emailContent = buildEmailContent(user.getUsername(), token, EmailSubject.CONFIRM_EMAIL);
         asyncEmailService.sendEmail(email.toLowerCase(), emailContent,
                 EmailSubject.CONFIRM_EMAIL.getSubject());
@@ -50,10 +46,8 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     @Override
     public void sendResetPasswordEmail(String email) {
         User user = userMapper.toUser(userService.getUserByEmail(email));
-
         ResetPasswordToken resetPasswordToken = resetPasswordTokenService.generateResetPasswordToken(user);
         String token = resetPasswordTokenService.saveResetPasswordToken(resetPasswordToken);
-
         String emailContent = buildEmailContent(user.getUsername(), token, EmailSubject.RESET_PASSWORD);
         asyncEmailService.sendEmail(email.toLowerCase(), emailContent,
                 EmailSubject.RESET_PASSWORD.getSubject());
@@ -63,7 +57,6 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         Context ctx = new Context();
         ctx.setVariable("username", username);
         ctx.setVariable("url", apiBackendBaseUrl + apiBaseResourcePath + subject.getPath() + token);
-
         return htmlTemplateEngine.process(subject.getTemplate(), ctx);
     }
 }

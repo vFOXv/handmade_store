@@ -17,12 +17,9 @@ public class Material {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "material_name", unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private String materialName;
-
     @OneToMany(mappedBy = "material", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     @JsonManagedReference // Эта сторона будет сериализована
     private List<Item> items;
-
 }

@@ -10,7 +10,6 @@ public enum EmailSubject {
     CONFIRM_EMAIL("Email confirmation",
             "emails/confirm-email",
             "/auth/confirm?token="),
-
     RESET_PASSWORD("Reset password instruction",
             "emails/reset-password-email",
             "/auth/reset-password?token=");

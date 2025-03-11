@@ -18,7 +18,6 @@ import static com.ua.teamchallenge.handmadestore.util.ServiceConstants.UTF8;
 @RequiredArgsConstructor
 public class AsyncEmailServiceImpl implements AsyncEmailService {
     private final JavaMailSender mailSender;
-
     @Value("${email.sender.login}")
     private String sender;
 

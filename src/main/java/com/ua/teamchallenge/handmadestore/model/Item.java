@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,14 +16,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Item {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "name", unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private String name;
-
     private String description;
     @ManyToOne
     @JoinColumn(name="id",insertable = false, updatable = false)

@@ -22,16 +22,21 @@ public interface AuthenticationControllerOpenApi {
                     description = "User successfully authenticated",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = AuthenticationResponse.class))),
+                            schema = @Schema(implementation = AuthenticationResponse.class)
+                    )
+            ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Bad request. Missing required parameters"),
+                    description = "Bad request. Missing required parameters"
+            ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Wrong credentials"),
+                    description = "Wrong credentials"
+            ),
             @ApiResponse(
                     responseCode = "500",
-                    description = "Unexpected internal error")
+                    description = "Unexpected internal error"
+            )
     })
     AuthenticationResponse login(@Valid @RequestBody AuthenticationRequest request);
 
@@ -42,16 +47,21 @@ public interface AuthenticationControllerOpenApi {
                     description = "User successfully registered, confirmation email sent",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = UserDto.class))),
+                            schema = @Schema(implementation = UserDto.class)
+                    )
+            ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Bad request. Not valid user data"),
+                    description = "Bad request. Not valid user data"
+            ),
             @ApiResponse(
                     responseCode = "409",
-                    description = "Username or email already exists"),
+                    description = "Username or email already exists"
+            ),
             @ApiResponse(
                     responseCode = "500",
-                    description = "Unexpected internal error")
+                    description = "Unexpected internal error"
+            )
     })
     UserDto register(@Valid @RequestBody RegistrationRequestDto request);
 
@@ -79,10 +89,12 @@ public interface AuthenticationControllerOpenApi {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Email sent successfully"),
+                    description = "Email sent successfully"
+            ),
             @ApiResponse(
                     responseCode = "500",
-                    description = "Failed to send email message"),
+                    description = "Failed to send email message"
+            ),
     })
     void resendConfirmationEmail(@RequestBody EmailRequestDto request);
 
@@ -93,19 +105,25 @@ public interface AuthenticationControllerOpenApi {
                     description = "New access token successfully generated",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = RefreshTokenResponse.class))),
+                            schema = @Schema(implementation = RefreshTokenResponse.class)
+                    )
+            ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Bad request. Missing required parameters"),
+                    description = "Bad request. Missing required parameters"
+            ),
             @ApiResponse(
                     responseCode = "403",
-                    description = "Token has expired"),
+                    description = "Token has expired"
+            ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Token not found"),
+                    description = "Token not found"
+            ),
             @ApiResponse(
                     responseCode = "500",
-                    description = "Unexpected internal error")
+                    description = "Unexpected internal error"
+            )
     })
     RefreshTokenResponse refreshToken(@Valid @RequestBody RefreshTokenRequest request);
 
@@ -113,13 +131,16 @@ public interface AuthenticationControllerOpenApi {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Successfully sent reset password email"),
+                    description = "Successfully sent reset password email"
+            ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "User not found"),
+                    description = "User not found"
+            ),
             @ApiResponse(
                     responseCode = "500",
-                    description = "Failed to send email message")
+                    description = "Failed to send email message"
+            )
     })
     void sendResetPasswordEmail(@Valid @RequestBody EmailRequestDto emailRequestDto);
 
@@ -127,10 +148,12 @@ public interface AuthenticationControllerOpenApi {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "302",
-                    description = "Successfully redirected to reset password page"),
+                    description = "Successfully redirected to reset password page"
+            ),
             @ApiResponse(
                     responseCode = "500",
-                    description = "Failed to send email message")
+                    description = "Failed to send email message"
+            )
     })
     ResponseEntity<Void> redirectToResetPasswordPage(@RequestParam("token") String token);
 
@@ -138,22 +161,28 @@ public interface AuthenticationControllerOpenApi {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Password successfully changed"),
+                    description = "Password successfully changed"
+            ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Bad request. Missing required parameters"),
+                    description = "Bad request. Missing required parameters"
+            ),
             @ApiResponse(
                     responseCode = "403",
-                    description = "Token has expired"),
+                    description = "Token has expired"
+            ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Token not found"),
+                    description = "Token not found"
+            ),
             @ApiResponse(
                     responseCode = "409",
-                    description = "Token has already been used"),
+                    description = "Token has already been used"
+            ),
             @ApiResponse(
                     responseCode = "500",
-                    description = "Unexpected internal error")
+                    description = "Unexpected internal error"
+            )
     })
     void resetPassword(@Valid @RequestBody ChangePasswordRequest request,
                        @RequestParam("token") String token);

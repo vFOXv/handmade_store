@@ -10,6 +10,7 @@ import com.ua.teamchallenge.handmadestore.service.ConfirmationTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -21,16 +22,17 @@ import static com.ua.teamchallenge.handmadestore.util.ServiceConstants.*;
 @RequiredArgsConstructor
 public class ConfirmationTokenServiceImpl implements ConfirmationTokenService {
     private final ConfirmationTokenRepository confirmationTokenRepository;
-
     @Value("${email.confirmation.token.lifetime}")
     private Duration tokenLifetime;
 
     @Override
+    @Transactional
     public String saveConfirmationToken(ConfirmationToken token) {
         return confirmationTokenRepository.save(token).getToken();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ConfirmationToken getConfirmationToken(String token) {
         return confirmationTokenRepository.findByToken(token)
                 .orElseThrow(() -> new EntityNotFoundException(TOKEN_NOT_FOUND));
@@ -49,8 +51,7 @@ public class ConfirmationTokenServiceImpl implements ConfirmationTokenService {
     @Override
     public void validateConfirmationToken(ConfirmationToken confirmationToken) {
         if (confirmationToken.getConfirmedAt() != null) {
-            throw new TokenAlreadyConfirmedException(String.format(EMAIL_ALREADY_CONFIRMED,
-                    confirmationToken.getUser().getEmail()));
+            throw new TokenAlreadyConfirmedException(String.format(EMAIL_ALREADY_CONFIRMED, confirmationToken.getUser().getEmail()));
         }
 
         if (confirmationToken.getExpiresAt().isBefore(LocalDateTime.now())) {

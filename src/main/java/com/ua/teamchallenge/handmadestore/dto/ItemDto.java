@@ -9,7 +9,6 @@ import java.util.List;
 
 @Data
 public class ItemDto {
-
     private Long id;
     private String name;
     private String description;
@@ -19,5 +18,4 @@ public class ItemDto {
     private Double price;
     private int discount;
     private List<ColorDto> colors;
-
 }

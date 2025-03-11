@@ -10,6 +10,7 @@ import com.ua.teamchallenge.handmadestore.service.ResetPasswordTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -21,7 +22,6 @@ import static com.ua.teamchallenge.handmadestore.util.ServiceConstants.*;
 @RequiredArgsConstructor
 public class ResetPasswordTokenServiceImpl implements ResetPasswordTokenService {
     private final ResetPasswordTokenRepository resetPasswordTokenRepository;
-
     @Value("${reset.password.token.lifetime}")
     private Duration tokenLifetime;
 
@@ -36,11 +36,13 @@ public class ResetPasswordTokenServiceImpl implements ResetPasswordTokenService 
     }
 
     @Override
+    @Transactional
     public String saveResetPasswordToken(ResetPasswordToken token) {
         return resetPasswordTokenRepository.save(token).getToken();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ResetPasswordToken getResetPasswordToken(String token) {
         return resetPasswordTokenRepository.findByToken(token)
                 .orElseThrow(() -> new EntityNotFoundException(TOKEN_NOT_FOUND));

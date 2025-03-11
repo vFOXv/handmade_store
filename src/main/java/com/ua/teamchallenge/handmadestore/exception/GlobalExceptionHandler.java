@@ -30,7 +30,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             @NonNull HttpStatusCode status,
             @NonNull WebRequest request) {
         log.error(e.getMessage(), e);
-
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("errorCode", status.value());
         body.put("timestamp", LocalDateTime.now());
