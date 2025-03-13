@@ -13,22 +13,20 @@ VALUES (1, 1),
        (2, 2);
 
 INSERT INTO categories(id, category_name)
-VALUES  (1, 'candles'),
-        (2, 'picture'),
-        (3, 'knives'),
-        (4, 'curtains');
+VALUES  (1, 'jewelry'),
+        (2, 'bracelets'),
+        (3, 'pendants'),
+        (4, 'earrings'),
+        (5, 'broches'),
+        (6, 'picture'),
+        (7, 'knives'),
+        (8, 'curtains');
 
 INSERT INTO materials(id, material_name)
 VALUES  (1, 'wax'),
         (2, 'paper'),
         (3, 'steel'),
         (4, 'textile');
-
-INSERT INTO styles(id, style_name)
-VALUES  (1, 'light'),
-        (2, 'dark'),
-        (3, 'pinkish'),
-        (4, 'official');
 
 INSERT INTO colors(id, color_name)
 VALUES  (1, 'red'),
@@ -41,11 +39,11 @@ VALUES  (1, 'red'),
         (8, 'pink'),
         (9, 'coloring');
 
-INSERT INTO items(name, description, category_id, material_id, style_id, price, discount)
-VALUES  ('mint scented candle', 'scented candle with mint flavor', 1, 1, 4, 10, 10),
-        ('Landscape with deer', 'large painting "Landscape with a deer"',2, 2, 2, 45, 0),
-        ('kitchen knife', 'artistic kitchen knife', 3, 3, 1, 30,5),
-        ('curtains', 'pink curtains', 4, 4, 3, 25, 0);
+INSERT INTO items(name, description, created_at, category_id, material_id, price, discount)
+VALUES  ('mint scented candle', 'scented candle with mint flavor', CURRENT_DATE, 1, 1, 10, 10),
+        ('Landscape with deer', 'large painting "Landscape with a deer"', CURRENT_DATE,2, 2, 45, 0),
+        ('kitchen knife', 'artistic kitchen knife', CURRENT_DATE, 3, 3, 30,5),
+        ('curtains', 'pink curtains', CURRENT_DATE, 4, 4, 25, 0);
 
 INSERT INTO items_colors(item_id, color_id, quantity)
 VALUES  (1, 1, 5),

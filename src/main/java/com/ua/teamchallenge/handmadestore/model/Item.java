@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class Item {
     @Column(unique = true, nullable = false)
     private String name;
     private String description;
+    private LocalDate createdAt;
     @ManyToOne
     @JoinColumn(name="id",insertable = false, updatable = false)
     @JsonBackReference // Эта сторона не будет сериализована
@@ -30,15 +32,8 @@ public class Item {
     @JoinColumn(name="id", insertable = false, updatable = false)
     @JsonBackReference // Эта сторона не будет сериализована
     private Material material;
-    @ManyToOne
-    @JoinColumn(name="id", insertable = false, updatable = false)
-    @JsonBackReference // Эта сторона не будет сериализована
-    private Style style;
     private Double price;
     private int discount;
-//    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonBackReference // Эта сторона не будет сериализована
-//    private List<ItemColor> itemColors = new ArrayList<>();
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
         name = "items_colors",

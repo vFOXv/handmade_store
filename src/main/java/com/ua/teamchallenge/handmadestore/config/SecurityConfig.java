@@ -23,7 +23,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableMethodSecurity
 @RequiredArgsConstructor
-public class SecurityConfiguration {
+public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
@@ -55,7 +55,8 @@ public class SecurityConfiguration {
                         auth -> auth
                                 .requestMatchers("/api/v1/auth/**",
                                         "/v3/api-docs/**",
-                                        "/swagger-ui/**")
+                                        "/swagger-ui/**",
+                                        "/api/r1/items")
                                 .permitAll()
                                 .anyRequest().authenticated()
                 )
