@@ -22,20 +22,15 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "username", unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private String username;
-
     @JsonIgnore
-    @Column(name = "password", nullable = false)
+    @Column(nullable = false)
     private String password;
-
-    @Column(name = "email", unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private String email;
-
-    @Column(name = "is_enabled", nullable = false)
+    @Column(nullable = false)
     private boolean isEnabled;
-
     @ManyToMany
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),

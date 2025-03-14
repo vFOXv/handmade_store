@@ -8,6 +8,7 @@ import com.ua.teamchallenge.handmadestore.repository.UserRepository;
 import com.ua.teamchallenge.handmadestore.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.ua.teamchallenge.handmadestore.util.ServiceConstants.USER_NOT_FOUND_BY_EMAIL;
 
@@ -18,14 +19,15 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
+    @Transactional(readOnly = true)
     public UserDto getUserByEmail(String email) {
         User user = userRepository.findByEmailIgnoreCase(email)
-                .orElseThrow(() -> new EntityNotFoundException(String.format(USER_NOT_FOUND_BY_EMAIL,
-                        email.toLowerCase())));
+                .orElseThrow(() -> new EntityNotFoundException(String.format(USER_NOT_FOUND_BY_EMAIL, email.toLowerCase())));
         return userMapper.toUserDto(user);
     }
 
     @Override
+    @Transactional
     public void enableUser(User user) {
         user.setEnabled(true);
         userRepository.save(user);

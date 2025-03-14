@@ -14,10 +14,10 @@ import com.ua.teamchallenge.handmadestore.service.ConfirmationTokenService;
 import com.ua.teamchallenge.handmadestore.service.EmailSenderService;
 import com.ua.teamchallenge.handmadestore.service.RegistrationService;
 import com.ua.teamchallenge.handmadestore.service.UserService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -50,7 +50,6 @@ public class RegistrationServiceImpl implements RegistrationService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format(ROLE_NOT_FOUND, ROLE_USER)));
         Set<Role> roles = new HashSet<>();
         roles.add(defaultRole);
-
         User user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
@@ -58,7 +57,6 @@ public class RegistrationServiceImpl implements RegistrationService {
                 .roles(roles)
                 .isEnabled(false)
                 .build();
-
         User savedUser = userRepository.save(user);
         emailSenderService.sendConfirmationEmail(savedUser.getEmail());
         return userMapper.toUserDto(savedUser);
@@ -69,7 +67,6 @@ public class RegistrationServiceImpl implements RegistrationService {
     public void confirmToken(String token) {
         ConfirmationToken confirmationToken = confirmationTokenService.getConfirmationToken(token);
         confirmationTokenService.validateConfirmationToken(confirmationToken);
-
         confirmationToken.setConfirmedAt(LocalDateTime.now());
         confirmationTokenService.saveConfirmationToken(confirmationToken);
         userService.enableUser(confirmationToken.getUser());

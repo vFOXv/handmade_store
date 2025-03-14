@@ -14,13 +14,13 @@ import com.ua.teamchallenge.handmadestore.service.AuthenticationService;
 import com.ua.teamchallenge.handmadestore.service.EmailSenderService;
 import com.ua.teamchallenge.handmadestore.service.RefreshTokenService;
 import com.ua.teamchallenge.handmadestore.service.ResetPasswordTokenService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -43,7 +43,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         log.info("Authenticating user with username: '{}'", request.getUsername());
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 request.getUsername(), request.getPassword()));
-
         log.info("User '{}' successfully authenticated", request.getUsername());
         return new AuthenticationResponse(jwtService.generateToken(request.getUsername()),
                 refreshTokenService.generateRefreshToken(request.getUsername()).getToken());
@@ -64,10 +63,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public void resetPassword(String newPassword, String token) {
         ResetPasswordToken resetPasswordToken = resetPasswordTokenService.getResetPasswordToken(token);
         resetPasswordTokenService.validateResetPasswordToken(resetPasswordToken);
-
         resetPasswordToken.setConfirmedAt(LocalDateTime.now());
         resetPasswordTokenService.saveResetPasswordToken(resetPasswordToken);
-
         User user = resetPasswordToken.getUser();
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);

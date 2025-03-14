@@ -18,7 +18,6 @@ import static com.ua.teamchallenge.handmadestore.util.ValidationRegExp.PASSWORDS
 @AllArgsConstructor
 @Schema(description = "Dto for change and reset user password")
 public class ChangePasswordRequest {
-
     @NotBlank(groups = {OnChangePassword.class}, message = CURRENT_PASSWORD_REQUIRED)
     @Schema(description = "User current password", example = "Qwerty123")
     private String oldPassword;

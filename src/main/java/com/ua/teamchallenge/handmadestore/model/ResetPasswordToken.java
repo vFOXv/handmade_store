@@ -16,19 +16,13 @@ public class ResetPasswordToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "token", nullable = false)
+    @Column(nullable = false)
     private String token;
-
-    @Column(name = "created_at", nullable = false)
+    @Column(nullable = false)
     private LocalDateTime createdAt;
-
-    @Column(name = "expires_at", nullable = false)
+    @Column(nullable = false)
     private LocalDateTime expiresAt;
-
-    @Column(name = "confirmed_at")
     private LocalDateTime confirmedAt;
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

@@ -13,6 +13,7 @@ public class ValidationConstants {
     public static final String EMAIL_VALIDATION_MESSAGE = "Not valid email";
     public static final String PASSWORDS_VALIDATION_MESSAGE = "Your password must contain upper and lower case " +
             "letters and numbers, at least 7 and maximum 30 characters.";
+    
     private ValidationConstants() {
     }
 }

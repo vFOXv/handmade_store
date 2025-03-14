@@ -29,11 +29,6 @@ CREATE TABLE IF NOT EXISTS materials(
 						material_name	VARCHAR(50) NOT NULL
 						);
 
-CREATE TABLE IF NOT EXISTS styles(
-						id 		BIGSERIAL PRIMARY KEY,
-						style_name	VARCHAR(50) NOT NULL
-						);
-
 CREATE TABLE IF NOT EXISTS colors(
 						id 		BIGSERIAL PRIMARY KEY,
 						color_name	VARCHAR(50) NOT NULL
@@ -43,14 +38,13 @@ CREATE TABLE IF NOT EXISTS items(
 						id 		BIGSERIAL PRIMARY KEY,
 						name		VARCHAR(50) NOT NULL,
 						description	VARCHAR(5000),
+                        created_at  DATE NOT NULL,
 						category_id BIGSERIAL NOT NULL,
 						material_id BIGSERIAL NOT NULL,
-						style_id	BIGSERIAL NOT NULL,
 						price		MONEY NOT NULL,
 						discount	INT DEFAULT 0 CHECK(discount >=0 AND discount <= 100) NOT NULL,
 						FOREIGN KEY(category_id) REFERENCES categories(id),
-						FOREIGN KEY(material_id) REFERENCES materials(id),
-						FOREIGN KEY(style_id) REFERENCES styles(id)
+						FOREIGN KEY(material_id) REFERENCES materials(id)
 						);
 
 CREATE TABLE items_colors(

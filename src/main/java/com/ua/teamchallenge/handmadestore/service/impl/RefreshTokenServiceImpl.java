@@ -1,16 +1,15 @@
 package com.ua.teamchallenge.handmadestore.service.impl;
 
-
 import com.ua.teamchallenge.handmadestore.exception.RefreshTokenExpiredException;
 import com.ua.teamchallenge.handmadestore.model.RefreshToken;
 import com.ua.teamchallenge.handmadestore.model.User;
 import com.ua.teamchallenge.handmadestore.repository.RefreshTokenRepository;
 import com.ua.teamchallenge.handmadestore.repository.UserRepository;
 import com.ua.teamchallenge.handmadestore.service.RefreshTokenService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -24,11 +23,11 @@ import static com.ua.teamchallenge.handmadestore.util.ServiceConstants.REFRESH_T
 public class RefreshTokenServiceImpl implements RefreshTokenService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserRepository userRepository;
-
     @Value("${jwt.refresh-expiration}")
     private Duration refreshExpiration;
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<RefreshToken> getRefreshToken(String token) {
         return refreshTokenRepository.findByToken(token);
     }
@@ -38,7 +37,6 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     public RefreshToken generateRefreshToken(String username) {
         User user = userRepository.findByUsernameIgnoreCase(username).orElseThrow();
         deleteRefreshTokenByUser(user);
-
         RefreshToken refreshToken = RefreshToken.builder()
                 .token(UUID.randomUUID().toString())
                 .expiresAt(LocalDateTime.now().plusHours(refreshExpiration.toHours()))
@@ -48,6 +46,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     }
 
     @Override
+    @Transactional
     public RefreshToken verifyExpirationDate(RefreshToken token) {
         if (token.getExpiresAt().isBefore(LocalDateTime.now())) {
             refreshTokenRepository.delete(token);
@@ -57,6 +56,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     }
 
     @Override
+    @Transactional
     public void deleteRefreshTokenByUser(User user) {
         if (refreshTokenRepository.existsByUser(user)) {
             refreshTokenRepository.deleteByUser(user);
