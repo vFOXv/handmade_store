@@ -3,6 +3,7 @@ package com.ua.teamchallenge.handmadestore.service.impl;
 import com.ua.teamchallenge.handmadestore.dto.ItemDto;
 import com.ua.teamchallenge.handmadestore.exception.EntityNotFoundException;
 import com.ua.teamchallenge.handmadestore.mapper.ItemMapper;
+import com.ua.teamchallenge.handmadestore.model.Category;
 import com.ua.teamchallenge.handmadestore.model.Item;
 import com.ua.teamchallenge.handmadestore.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,4 +37,17 @@ public class ItemServiceImpl {
                 .orElseThrow(() -> new EntityNotFoundException(String.format(ITEM_NOT_FOUND_BY_ID, id)));
         return itemMapper.toItemDto(item);
     }
+
+    public List<ItemDto> sortToCategory(Category category){
+        List<Item> items = itemRepository.findAllItems();
+        List<ItemDto> itemsDto = new ArrayList<>();
+        for(Item item : items){
+            if(category.equals(item.getCategory())){
+                itemsDto.add(itemMapper.toItemDto(item));
+            }
+        }
+        return itemsDto;
+    }
+
+    public ItemDto findByLastCreatedAt()
 }

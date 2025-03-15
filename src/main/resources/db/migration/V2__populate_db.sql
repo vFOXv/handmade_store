@@ -14,13 +14,21 @@ VALUES (1, 1),
 
 INSERT INTO categories(id, category_name)
 VALUES  (1, 'jewelry'),
-        (2, 'bracelets'),
-        (3, 'pendants'),
-        (4, 'earrings'),
-        (5, 'broches'),
-        (6, 'picture'),
-        (7, 'knives'),
-        (8, 'curtains');
+        (2, 'picture'),
+        (3, 'knives'),
+        (4, 'curtains');
+
+INSERT INTO subcategories(id, name)
+VALUES  (1, 'bracelets'),
+        (2, 'pendants'),
+        (3, 'earrings'),
+        (4, 'broches');
+
+INSERT INTO category_subcategories(category_id, subcategory_id)
+VALUES  (1, 1),
+        (1, 2),
+        (1, 3),
+        (1, 4);
 
 INSERT INTO materials(id, material_name)
 VALUES  (1, 'wax'),
