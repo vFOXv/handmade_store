@@ -22,6 +22,18 @@ CREATE TABLE IF NOT EXISTS users_roles(
 CREATE TABLE IF NOT EXISTS categories(
 						id 		BIGSERIAL PRIMARY KEY,
 						category_name	VARCHAR(50) NOT NULL
+                        );
+
+CREATE TABLE IF NOT EXISTS subcategories(
+					    id 		BIGSERIAL PRIMARY KEY,
+						name	VARCHAR(50) NOT NULL
+						);
+
+CREATE TABLE IF NOT EXISTS category_subcategories(
+                        category_id 		BIGSERIAL NOT NULL,
+                        subcategory_id 		BIGSERIAL PRIMARY KEY,
+                        FOREIGN KEY(category_id) REFERENCES categories(id),
+                        FOREIGN KEY(subcategory_id) REFERENCES subcategories(id)
 						);
 
 CREATE TABLE IF NOT EXISTS materials(
