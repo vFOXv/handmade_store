@@ -12,23 +12,25 @@ INSERT INTO users_roles(user_id, role_id)
 VALUES (1, 1),
        (2, 2);
 
-INSERT INTO categories(id, category_name)
-VALUES  (1, 'jewelry'),
-        (2, 'picture'),
-        (3, 'knives'),
-        (4, 'curtains');
-
 INSERT INTO subcategories(id, name)
 VALUES  (1, 'bracelets'),
         (2, 'pendants'),
         (3, 'earrings'),
         (4, 'broches');
 
-INSERT INTO category_subcategories(category_id, subcategory_id)
-VALUES  (1, 1),
-        (1, 2),
-        (1, 3),
-        (1, 4);
+INSERT INTO categories(id, category_name)
+VALUES  (1, 'jewelry'),
+        (2, 'picture'),
+        (3, 'knives'),
+        (4, 'curtains');
+
+
+
+-- INSERT INTO category_subcategories(category_id, subcategory_id)
+-- VALUES  (1, 1),
+--         (1, 2),
+--         (1, 3),
+--         (1, 4);
 
 INSERT INTO materials(id, material_name)
 VALUES  (1, 'wax'),
@@ -48,9 +50,11 @@ VALUES  (1, 'red'),
         (9, 'coloring');
 
 INSERT INTO items(name, description, created_at, category_id, material_id, price, discount)
-VALUES  ('mint scented candle', 'scented candle with mint flavor', CURRENT_DATE, 1, 1, 10, 10),
-        ('Landscape with deer', 'large painting "Landscape with a deer"', CURRENT_DATE,2, 2, 45, 0),
-        ('kitchen knife', 'artistic kitchen knife', CURRENT_DATE, 3, 3, 30,5),
+VALUES  ('bear shaped candle', 'brown bear shaped candle', '2025-03-11', 1, 1, 12, 12),
+        ('pig shaped candle', 'pink pig shaped candle', '2025-03-13', 1, 1, 13, 15),
+        ('mint scented candle', 'scented candle with mint flavor', '2025-03-14', 1, 1, 10, 10),
+        ('Landscape with deer', 'large painting "Landscape with a deer"', '2025-03-15',2, 2, 45, 0),
+        ('kitchen knife', 'artistic kitchen knife', '2025-03-12', 3, 3, 30,5),
         ('curtains', 'pink curtains', CURRENT_DATE, 4, 4, 25, 0);
 
 INSERT INTO items_colors(item_id, color_id, quantity)

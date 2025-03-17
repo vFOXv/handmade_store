@@ -13,8 +13,8 @@ public class ItemDto {
     private String name;
     private String description;
     private LocalDate createdAt;
-    private Category category;
-    private Material material;
+    private CategoryDto categoryDto;
+    private MaterialDto materialDto;
     private Double price;
     private int discount;
     private List<ColorDto> colors;

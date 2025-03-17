@@ -37,3 +37,7 @@ reset:
   password:
     token:
       lifetime: 15m
+config:
+  import: optional:file:.env[.properties]
+
+

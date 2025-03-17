@@ -8,5 +8,6 @@ import java.util.List;
 public class CategoryDto {
     private Long id;
     private String categoryName;
-    private List<SubcategoryDto> subcategories;
+    //private List<SubcategoryDto> subcategories;
+    private SubcategoryDto subcategoryDto;
 }

@@ -25,11 +25,11 @@ public class Item {
     private String description;
     private LocalDate createdAt;
     @ManyToOne
-    @JoinColumn(name="id",insertable = false, updatable = false)
+    @JoinColumn(name="category_id")
     @JsonBackReference // Эта сторона не будет сериализована
     private Category category;
     @ManyToOne
-    @JoinColumn(name="id", insertable = false, updatable = false)
+    @JoinColumn(name="material_id")
     @JsonBackReference // Эта сторона не будет сериализована
     private Material material;
     private Double price;

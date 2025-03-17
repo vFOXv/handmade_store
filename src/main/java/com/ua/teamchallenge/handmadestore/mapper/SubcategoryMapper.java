@@ -5,9 +5,10 @@ import com.ua.teamchallenge.handmadestore.dto.SubcategoryDto;
 import com.ua.teamchallenge.handmadestore.model.Subcategory;
 import org.mapstruct.Mapper;
 
-@Mapper(config = MapStructConfig.class)
+//@Mapper(config = MapStructConfig.class)
+@Mapper(componentModel = "spring")
 public interface SubcategoryMapper {
-    SubcategoryDto toCategoryDto(Subcategory category);
+    SubcategoryDto toSubcategoryDto(Subcategory subcategory);
 
-    Subcategory toCategory(SubcategoryDto categoryDto);
+    Subcategory toSubcategory(SubcategoryDto subcategoryDto);
 }
