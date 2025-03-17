@@ -1,22 +1,30 @@
 package com.ua.teamchallenge.handmadestore.repository;
 
 import com.ua.teamchallenge.handmadestore.model.Item;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
-//    @Query("SELECT DISTINCT i FROM Item i LEFT JOIN FETCH i.colors")
-    @Query("SELECT DISTINCT i FROM Item i")
-    List<Item> findAllItems();
+    Page<Item> findDistinctItems(Pageable pageable);
 
-//    @Query("SELECT i FROM Item i WHERE i.category.id = :categoryId")
-//    List<Item> findByCategoryId(@Param("categoryId") Long categoryId);
+    Page<Item> findDistinctByCategoryId(Long categoryId, Pageable pageable);
+
+    Page<Item> findDistinctByCategorySubcategoryId(Long categorySubcategoryId, Pageable pageable);
+
+    Page<Item> findDistinctByCategoryIdAndCategorySubcategoryId(Long categoryId, Long categorySubcategoryId, Pageable pageable);
+
+    Page<Item> findDistinctByMaterialId(Long materialId, Pageable pageable);
+
+    Page<Item> findDistinctByMaterialIdAndCategoryId(Long materialId, Long categoryId, Pageable pageable);
+
+    Page<Item> findDistinctByMaterialIdAndCategoryIdAndCategorySubcategoryId(Long materialId, Long categoryId, Long categorySubcategoryId, Pageable pageable);
 
     @Query("SELECT i FROM Item i WHERE i.createdAt = (SELECT MAX(i2.createdAt) FROM Item i2)")
-    Item findItemWithLatestCreatedAt();
+    Optional<Item> findItemWithLatestCreatedAt();
 }

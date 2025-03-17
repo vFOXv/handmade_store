@@ -3,74 +3,70 @@ package com.ua.teamchallenge.handmadestore.controller;
 import com.ua.teamchallenge.handmadestore.dto.ItemDto;
 import com.ua.teamchallenge.handmadestore.service.impl.ItemServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/get")
+@RequestMapping("/api/v1/items")
 @RequiredArgsConstructor
 public class ItemGetController {
-
     private final ItemServiceImpl itemService;
 
-    @GetMapping("/items")
-    public List<ItemDto> findAllItems(){
-        return itemService.findAll();
+    @GetMapping("")
+    public PagedModel<ItemDto> findAllItems(@PageableDefault Pageable pageable) {
+        return new PagedModel<>(itemService.findAll(pageable));
     }
 
-    @GetMapping("/item/{id}")
-    public ItemDto findById(@PathVariable("id") long id){
-        return itemService.findById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<ItemDto> findById(@PathVariable long id){
+        return ResponseEntity.ok(itemService.findById(id));
     }
 
-    @GetMapping("/category/{id}")
-    public List<ItemDto> findByCategory(@PathVariable("id") long id){
-        return itemService.sortToCategory(id);
+    @GetMapping(params = "categoryId")
+    public PagedModel<ItemDto> findByCategory(@RequestParam long categoryId,
+                                              @PageableDefault Pageable pageable){
+        return new PagedModel<>(itemService.findByCategoryId(categoryId, pageable));
     }
 
-    @GetMapping("/subcategory/{id}")
-    public List<ItemDto> findBySubcategory(@PathVariable long id){
-        return itemService.sortToSubcategory(id);
+    @GetMapping(params = "subcategoryId")
+    public PagedModel<ItemDto> findBySubcategory(@RequestParam(required = false) long subcategoryId,
+                                                 @PageableDefault Pageable pageable){
+        return new PagedModel<>(itemService.findBySubcategoryId(subcategoryId, pageable));
     }
 
-    @GetMapping("/category/subcategory?category={idCategory}&subcategory={idSubcategory}")
-    public List<ItemDto> findBySubcategoryAndCategory(@RequestParam (value = "category", required = false) long idCategory,
-                                                      @RequestParam (value = "subcategory", required = false) long idSubcategory){
-        return itemService.sortToCategoryAndSubcategory(idCategory, idSubcategory);
+    @GetMapping(params = {"categoryId", "subcategoryId"})
+    public PagedModel<ItemDto> findBySubcategoryAndCategory(@RequestParam(required = false) long categoryId,
+                                                            @RequestParam(required = false) long subcategoryId,
+                                                            @PageableDefault Pageable pageable){
+        return new PagedModel<>(itemService.findByCategoryIdAndSubcategoryId(categoryId, subcategoryId, pageable));
     }
 
-    @GetMapping("/material/{id}")
-    public List<ItemDto> findByMaterial(@PathVariable("id") long id){
-        return itemService.sortToMaterial(id);
+    @GetMapping(params = "materialId")
+    public PagedModel<ItemDto> findByMaterial(@RequestParam(required = false) long materialId,
+                                              @PageableDefault Pageable pageable) {
+        return new PagedModel<>(itemService.findByMaterialId(materialId, pageable));
     }
 
-    @GetMapping("/category/material?category={idCategory}&material={idMaterial}")
-    public List<ItemDto> findByCategoryAndMaterial(@RequestParam (value = "category", required = false)long idCategory,
-                                                   @RequestParam (value = "material", required = false)long idMaterial){
-        return itemService.sortToMaterialAndCategory(idMaterial, idCategory);
+    @GetMapping(params = {"materialId", "categoryId"})
+    public PagedModel<ItemDto> findByMaterialAndCategory(@RequestParam(required = false) long materialId,
+                                                         @RequestParam(required = false) long categoryId,
+                                                         @PageableDefault Pageable pageable) {
+        return new PagedModel<>(itemService.findByMaterialIdAndCategoryId(materialId, categoryId, pageable));
     }
 
-    @GetMapping("/category/subcategory/material?category={idCategory}&subcategory={idSubcategory}&material={idMaterial}")
-    public List<ItemDto> findByMaterialAndCategoryAndSubcategory(@RequestParam (value = "category", required = false) long idCategory,
-                                                                 @RequestParam (value = "subcategory", required = false)long idSubcategory,
-                                                                 @RequestParam (value = "material", required = false)long idMaterial){
-        return itemService.sortToMaterialAndCategoryAndSubcategory(idMaterial, idCategory, idSubcategory);
+    @GetMapping(params = {"materialId", "categoryId", "subcategoryId"})
+    public PagedModel<ItemDto> findByMaterialAndCategoryAndSubcategory(@RequestParam(required = false) long materialId,
+                                                                       @RequestParam(required = false) long categoryId,
+                                                                       @RequestParam(required = false) long subcategoryId,
+                                                                       @PageableDefault Pageable pageable){
+        return new PagedModel<>(itemService.findByMaterialIdAndCategoryIdAndSubcategoryId(materialId, categoryId, subcategoryId, pageable));
     }
 
-    @GetMapping("/price")
-    public List<ItemDto> sortByPrice(){
-        return itemService.sortToPrice();
-    }
-
-    @GetMapping("/category/subcategory/price?category={idCategory}&subcategory={idSubcategory}")
-    public List<ItemDto> sortToPriceAndCategoryAndSubcategory(@RequestParam (value = "category", required = false) long idCategory,
-                                                              @RequestParam (value = "subcategory", required = false) long idSubcategory){
-        return itemService.sortToPriceAndCategoryAndSubcategory(idCategory, idSubcategory);
-    }
-
-    @GetMapping("/last_date")
-    public ItemDto findLastDate(){
-        return itemService.findByLastCreatedAt();
+    @GetMapping(params = "lastDate")
+    public ItemDto findWithLastDate(){
+        return itemService.findWithLastDate();
     }
 }
