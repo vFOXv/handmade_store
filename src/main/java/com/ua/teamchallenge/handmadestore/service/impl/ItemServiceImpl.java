@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static com.ua.teamchallenge.handmadestore.util.ServiceConstants.ITEM_NOT_FOUND_BY_ID;
 
+
 @Service
 @RequiredArgsConstructor
 public class ItemServiceImpl {
@@ -21,8 +22,13 @@ public class ItemServiceImpl {
 
     @Transactional(readOnly = true)
     public Page<ItemDto> findAll(Pageable pageable) {
-        return itemRepository.findDistinctItems(pageable)
+        return itemRepository.findAll(pageable)
                 .map(itemMapper::toItemDto);
+        // Ленивая загрузка связанных сущностей
+//        itemPage.getContent().forEach(item -> {
+//            item.getCategory().getSubcategory();
+//        });
+//        return itemPage.map(itemMapper::toItemDto);
     }
 
     @Transactional(readOnly = true)
@@ -33,32 +39,32 @@ public class ItemServiceImpl {
     }
 
     public Page<ItemDto> findByCategoryId(long id, Pageable pageable) {
-        return itemRepository.findDistinctByCategoryId(id, pageable)
+        return itemRepository.findByCategoryId(id, pageable)
                 .map(itemMapper::toItemDto);
     }
 
     public Page<ItemDto> findBySubcategoryId(long id, Pageable pageable) {
-        return itemRepository.findDistinctByCategorySubcategoryId(id, pageable)
+        return itemRepository.findByCategorySubcategoryId(id, pageable)
                 .map(itemMapper::toItemDto);
     }
 
     public Page<ItemDto> findByCategoryIdAndSubcategoryId(long categoryId, long subcategoryId, Pageable pageable) {
-        return itemRepository.findDistinctByCategoryIdAndCategorySubcategoryId(categoryId, subcategoryId, pageable)
+        return itemRepository.findByCategoryIdAndCategorySubcategoryId(categoryId, subcategoryId, pageable)
                 .map(itemMapper::toItemDto);
     }
 
     public Page<ItemDto> findByMaterialId(long id, Pageable pageable) {
-        return itemRepository.findDistinctByMaterialId(id, pageable)
+        return itemRepository.findByMaterialId(id, pageable)
                 .map(itemMapper::toItemDto);
     }
 
     public Page<ItemDto> findByMaterialIdAndCategoryId(long materialId, long categoryId, Pageable pageable) {
-        return itemRepository.findDistinctByMaterialIdAndCategoryId(materialId, categoryId, pageable)
+        return itemRepository.findByMaterialIdAndCategoryId(materialId, categoryId, pageable)
                 .map(itemMapper::toItemDto);
     }
 
     public Page<ItemDto> findByMaterialIdAndCategoryIdAndSubcategoryId(long materialId, long categoryId, long subcategoryId, Pageable pageable) {
-        return itemRepository.findDistinctByMaterialIdAndCategoryIdAndCategorySubcategoryId(materialId, categoryId, subcategoryId, pageable)
+        return itemRepository.findByMaterialIdAndCategoryIdAndCategorySubcategoryId(materialId, categoryId, subcategoryId, pageable)
                 .map(itemMapper::toItemDto);
     }
 

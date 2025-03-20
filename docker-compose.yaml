@@ -17,7 +17,7 @@ services:
       - SPRING_MAIL_PASSWORD=${SPRING_MAIL_PASSWORD}
       - EMAIL_SENDER_LOGIN=${EMAIL_SENDER_LOGIN}
     ports:
-      - '8080:8080'
+      - '8082:8082'
 
 
 

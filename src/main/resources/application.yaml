@@ -1,4 +1,7 @@
 spring:
+  docker:
+    compose:
+      enabled: false
   application:
     name: handmade-store
   mail:
@@ -38,6 +41,6 @@ reset:
     token:
       lifetime: 15m
 config:
-  import: optional:file:.env[.properties]
+ import: optional:file:.env[.properties]
 
 
