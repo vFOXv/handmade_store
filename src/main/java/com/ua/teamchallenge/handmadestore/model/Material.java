@@ -20,6 +20,6 @@ public class Material {
     @Column(unique = true, nullable = false)
     private String materialName;
     @OneToMany(mappedBy = "material", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
-    @JsonManagedReference // Эта сторона будет сериализована
+    @JsonManagedReference("item-material") // Эта сторона будет сериализована
     private List<Item> items;
 }

@@ -1,5 +1,6 @@
 package com.ua.teamchallenge.handmadestore.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,6 +21,6 @@ public class Subcategory {
     @Column(nullable = false)
     private String name;
     @OneToMany(mappedBy = "subcategory", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference("category-subcategory")
     private List<Category> categories;
 }

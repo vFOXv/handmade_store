@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS items(
 						category_id BIGINT NOT NULL,
 						material_id BIGINT NOT NULL,
 						price		MONEY NOT NULL,
+                        quantity 	INT,
 						discount	INT DEFAULT 0 CHECK(discount >=0 AND discount <= 100) NOT NULL,
 						FOREIGN KEY(category_id) REFERENCES categories(id),
 						FOREIGN KEY(material_id) REFERENCES materials(id)
@@ -65,7 +66,6 @@ CREATE TABLE items_colors(
 						id 		BIGSERIAL PRIMARY KEY,
 						item_id 	BIGINT NOT NULL,
 						color_id 	BIGINT NOT NULL,
-						quantity 	INT NOT NULL,
 						FOREIGN KEY(item_id) REFERENCES items(id),
 						FOREIGN KEY(color_id) REFERENCES colors(id)
 						);
@@ -98,8 +98,8 @@ CREATE TABLE IF NOT EXISTS orders_items(
 
 CREATE TABLE IF NOT EXISTS images(
 						id BIGSERIAL PRIMARY KEY,
+                        item_id BIGINT,
 						image_url VARCHAR(255) NOT NULL,
-						item_id BIGINT,
 						FOREIGN KEY (item_id) REFERENCES items(id)
 						);
 

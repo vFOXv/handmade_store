@@ -16,13 +16,17 @@ INSERT INTO subcategories(id, name)
 VALUES  (1, 'bracelets'),
         (2, 'pendants'),
         (3, 'earrings'),
-        (4, 'broches');
+        (4, 'candle'),
+        (5, 'image'),
+        (6, 'cutlery'),
+        (7, 'tulle');
 
-INSERT INTO categories(id, category_name)
-VALUES  (1, 'jewelry'),
-        (2, 'picture'),
-        (3, 'knives'),
-        (4, 'curtains');
+INSERT INTO categories(id, category_name, subcategory_id)
+VALUES  ( 1,'jewelry', 1),
+        ( 2,'picture',5),
+        ( 3,'knives', 6),
+        ( 4,'curtains', 7),
+        ( 5,'light', 4);
 
 
 
@@ -49,19 +53,26 @@ VALUES  (1, 'red'),
         (8, 'pink'),
         (9, 'coloring');
 
-INSERT INTO items(name, description, created_at, category_id, material_id, price, discount)
-VALUES  ('bear shaped candle', 'brown bear shaped candle', '2025-03-11', 1, 1, 12, 12),
-        ('pig shaped candle', 'pink pig shaped candle', '2025-03-13', 1, 1, 13, 15),
-        ('mint scented candle', 'scented candle with mint flavor', '2025-03-14', 1, 1, 10, 10),
-        ('Landscape with deer', 'large painting "Landscape with a deer"', '2025-03-15',2, 2, 45, 0),
-        ('kitchen knife', 'artistic kitchen knife', '2025-03-12', 3, 3, 30,5),
-        ('curtains', 'pink curtains', CURRENT_DATE, 4, 4, 25, 0);
+INSERT INTO items(name, description, created_at, category_id, material_id, price, quantity, discount)
+VALUES  ('bear shaped candle', 'brown bear shaped candle', '2025-03-11', 5, 1, 12, 4,12),
+        ('pig shaped candle', 'pink pig shaped candle', '2025-03-13', 5, 1, 13, 5,15),
+        ('mint scented candle', 'scented candle with mint flavor', '2025-03-14', 5, 1, 6,10, 10),
+        ('Landscape with deer', 'large painting "Landscape with a deer"', '2025-03-15',2, 2, 7,45, 0),
+        ('kitchen knife', 'artistic kitchen knife', '2025-03-12', 3, 3, 30, 1,5),
+        ('curtains', 'pink curtains', CURRENT_DATE, 4, 4, 25, 2,0);
 
-INSERT INTO items_colors(item_id, color_id, quantity)
-VALUES  (1, 1, 5),
-        (1, 2, 4),
-        (1, 3, 3),
-        (2, 9, 2),
-        (3, 7, 5),
-        (4, 8, 4),
-        (4, 5, 6);
+INSERT INTO items_colors(item_id, color_id)
+VALUES  (1, 1),
+        (1, 2),
+        (1, 3),
+        (2, 9),
+        (3, 7),
+        (4, 8),
+        (4, 5);
+
+INSERT INTO images(item_id, image_url)
+VALUES  (1, 'http://example.com/photo1_1.jpg'),
+        (1, 'http://example.com/photo1_2.jpg'),
+        (1, 'http://example.com/photo1_3.jpg'),
+        (2, 'http://example.com/photo2_1.jpg'),
+        (2, 'http://example.com/photo2_2.jpg');

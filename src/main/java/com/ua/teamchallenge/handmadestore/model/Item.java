@@ -1,16 +1,15 @@
 package com.ua.teamchallenge.handmadestore.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-
 @Table(name = "items")
 @Getter
 @Setter
@@ -27,13 +26,14 @@ public class Item {
     private LocalDate createdAt;
     @ManyToOne
     @JoinColumn(name="category_id")
-    @JsonBackReference // Эта сторона не будет сериализована
+    @JsonBackReference("item-category") // Эта сторона не будет сериализована
     private Category category;
     @ManyToOne
     @JoinColumn(name="material_id")
-    @JsonBackReference // Эта сторона не будет сериализована
+    @JsonBackReference("item-material") // Эта сторона не будет сериализована
     private Material material;
-    private Double price;
+    private BigDecimal price;
+    private int quantity;
     private int discount;
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
@@ -42,8 +42,10 @@ public class Item {
         inverseJoinColumns = @JoinColumn(name = "color_id")
     )
     //@JsonBackReference // Эта сторона не будет сериализована
-    @JsonManagedReference // Эта сторона будет сериализована
+    //@JsonManagedReference("item-colors") // Эта сторона будет сериализована
     private List<Color> colors = new ArrayList<>();
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Image> images = new ArrayList<>();
 
     //Discount can't be <0% and >100%
     public void setDiscount(int discount) {

@@ -1,6 +1,7 @@
 package com.ua.teamchallenge.handmadestore.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,6 +28,7 @@ public class Color {
             inverseJoinColumns = @JoinColumn(name = "item_id")
     )
     //@JsonManagedReference // Эта сторона будет сериализована
-    @JsonBackReference // Эта сторона не будет сериализована
+    //@JsonBackReference("item-colors") // Эта сторона не будет сериализована
+    @JsonIgnore // Исключаем поле из сериализации/десериализации
     private List<Item> items = new ArrayList<>();
 }

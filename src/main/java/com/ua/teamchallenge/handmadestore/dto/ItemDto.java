@@ -1,9 +1,8 @@
 package com.ua.teamchallenge.handmadestore.dto;
 
-import com.ua.teamchallenge.handmadestore.model.Category;
-import com.ua.teamchallenge.handmadestore.model.Material;
-import lombok.Data;
 
+import lombok.Data;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,7 +14,9 @@ public class ItemDto {
     private LocalDate createdAt;
     private CategoryDto categoryDto;
     private MaterialDto materialDto;
-    private Double price;
+    private BigDecimal price;
+    private int quantity;
     private int discount;
     private List<ColorDto> colors;
+    private List<ImageDto> images;
 }

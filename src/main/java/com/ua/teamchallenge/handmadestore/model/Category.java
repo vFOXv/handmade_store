@@ -33,9 +33,9 @@ public class Category {
 //  change @ManyToMany on @OneToMany in subcategory
     @ManyToOne
     @JoinColumn(name="subcategory_id")
-    @JsonBackReference // Эта сторона не будет сериализована
+    @JsonBackReference("category-subcategory") // Эта сторона не будет сериализована
     private Subcategory subcategory;
     @OneToMany(mappedBy = "category", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
-    @JsonManagedReference // Эта сторона будет сериализована
+    @JsonManagedReference("item-category") // Эта сторона будет сериализована
     private List<Item> items;
 }

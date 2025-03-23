@@ -8,19 +8,20 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
 
 @RestController
-@RequestMapping("/api/v1/items")
+@RequestMapping("/api/get")
 @RequiredArgsConstructor
 public class ItemGetController {
     private final ItemServiceImpl itemService;
 
-    @GetMapping("")
+    @GetMapping("/items")
     public PagedModel<ItemDto> findAllItems(@PageableDefault Pageable pageable) {
         return new PagedModel<>(itemService.findAll(pageable));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/item/{id}")
     public ResponseEntity<ItemDto> findById(@PathVariable long id){
         return ResponseEntity.ok(itemService.findById(id));
     }
@@ -37,12 +38,13 @@ public class ItemGetController {
         return new PagedModel<>(itemService.findBySubcategoryId(subcategoryId, pageable));
     }
 
-    @GetMapping(params = {"categoryId", "subcategoryId"})
-    public PagedModel<ItemDto> findBySubcategoryAndCategory(@RequestParam(required = false) long categoryId,
-                                                            @RequestParam(required = false) long subcategoryId,
-                                                            @PageableDefault Pageable pageable){
-        return new PagedModel<>(itemService.findByCategoryIdAndSubcategoryId(categoryId, subcategoryId, pageable));
-    }
+ //   вероятно не нужен -    categoryId - уникален для каждого subcategoryId!!!!
+//    @GetMapping(params = {"categoryId", "subcategoryId"})
+//    public PagedModel<ItemDto> findBySubcategoryAndCategory(@RequestParam(required = false) long categoryId,
+//                                                            @RequestParam(required = false) long subcategoryId,
+//                                                            @PageableDefault Pageable pageable){
+//        return new PagedModel<>(itemService.findByCategoryIdAndSubcategoryId(categoryId, subcategoryId, pageable));
+//    }
 
     @GetMapping(params = "materialId")
     public PagedModel<ItemDto> findByMaterial(@RequestParam(required = false) long materialId,
@@ -50,6 +52,8 @@ public class ItemGetController {
         return new PagedModel<>(itemService.findByMaterialId(materialId, pageable));
     }
 
+
+    //check--------------------------.................>>>>>>>>>>>>>>>>>>>>>>>>>
     @GetMapping(params = {"materialId", "categoryId"})
     public PagedModel<ItemDto> findByMaterialAndCategory(@RequestParam(required = false) long materialId,
                                                          @RequestParam(required = false) long categoryId,
@@ -65,8 +69,18 @@ public class ItemGetController {
         return new PagedModel<>(itemService.findByMaterialIdAndCategoryIdAndSubcategoryId(materialId, categoryId, subcategoryId, pageable));
     }
 
-    @GetMapping(params = "lastDate")
+    @GetMapping("/lastDate")
     public ItemDto findWithLastDate(){
         return itemService.findWithLastDate();
+    }
+
+    @GetMapping("/price/grow")
+    public Page<ItemDto> sortByPriceGrow(@PageableDefault Pageable pageable){
+        return itemService.sortToPriceAllGrow(pageable);
+    }
+
+    @GetMapping("/price/drop")
+    public Page<ItemDto> sortByPriceDrop(@PageableDefault Pageable pageable){
+        return itemService.sortToPriceAllDrop(pageable);
     }
 }
