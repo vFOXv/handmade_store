@@ -21,10 +21,14 @@ public class ItemSetController {
     private final ItemMapper itemMapper;
 
     @PostMapping("/new_item")
-    public ItemDto saveItem(@RequestBody Item item){
+    public ItemDto saveItem(@RequestBody Item item) {
         item.getImages().forEach(image -> image.setItem(item));
         item.setCreatedAt(LocalDate.now());
         itemService.saveItem(item);
         return itemMapper.toItemDto(item);
     }
 }
+
+
+
+

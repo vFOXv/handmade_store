@@ -21,16 +21,6 @@ public class Category {
     private Long id;
     @Column(nullable = false)
     private String categoryName;
-//    @ManyToMany(cascade = CascadeType.MERGE)
-//    @JoinTable(
-//            name = "category_subcategories",
-//            joinColumns = @JoinColumn(name = "category_id"),
-//            inverseJoinColumns = @JoinColumn(name = "subcategory_id")
-//    )
-//    @JsonManagedReference
-//    private List<Subcategory> subcategories = new ArrayList<>();
-
-//  change @ManyToMany on @OneToMany in subcategory
     @ManyToOne
     @JoinColumn(name="subcategory_id")
     @JsonBackReference("category-subcategory") // Эта сторона не будет сериализована
@@ -38,4 +28,7 @@ public class Category {
     @OneToMany(mappedBy = "category", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     @JsonManagedReference("item-category") // Эта сторона будет сериализована
     private List<Item> items;
+    // список субкотегорий для фильтров
+//    @OneToMany
+//    private List<Subcategory> subcategories;
 }

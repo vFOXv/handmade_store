@@ -19,28 +19,23 @@ VALUES  (1, 'bracelets'),
         (4, 'candle'),
         (5, 'image'),
         (6, 'cutlery'),
-        (7, 'tulle');
+        (7, 'tulle'),
+        (8, 'lighter');
 
 INSERT INTO categories(id, category_name, subcategory_id)
 VALUES  ( 1,'jewelry', 1),
         ( 2,'picture',5),
         ( 3,'knives', 6),
         ( 4,'curtains', 7),
-        ( 5,'light', 4);
-
-
-
--- INSERT INTO category_subcategories(category_id, subcategory_id)
--- VALUES  (1, 1),
---         (1, 2),
---         (1, 3),
---         (1, 4);
+        ( 5,'light', 4),
+        ( 6,'light', 8);
 
 INSERT INTO materials(id, material_name)
 VALUES  (1, 'wax'),
         (2, 'paper'),
         (3, 'steel'),
         (4, 'textile');
+
 
 INSERT INTO colors(id, color_name)
 VALUES  (1, 'red'),

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Repository
@@ -31,4 +32,10 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Query("SELECT i FROM Item i WHERE i.createdAt = (SELECT MAX(i2.createdAt) FROM Item i2)")
     Optional<Item> findItemWithLatestCreatedAt();
+
+    @Query("SELECT MIN(price) FROM Item")
+    BigDecimal findMinPrice();
+
+    @Query("SELECT MAX(price) FROM Item")
+    BigDecimal findMaxPrice();
 }

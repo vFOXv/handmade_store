@@ -31,13 +31,6 @@ CREATE TABLE IF NOT EXISTS categories(
                         FOREIGN KEY(subcategory_id) REFERENCES subcategories(id)
                         );
 
--- CREATE TABLE IF NOT EXISTS category_subcategories(
---                         category_id 		BIGINT NOT NULL,
---                         subcategory_id 		BIGINT PRIMARY KEY,
---                         FOREIGN KEY(category_id) REFERENCES categories(id),
---                         FOREIGN KEY(subcategory_id) REFERENCES subcategories(id)
--- 						);
-
 CREATE TABLE IF NOT EXISTS materials(
 						id 		BIGSERIAL PRIMARY KEY,
 						material_name	VARCHAR(50) NOT NULL

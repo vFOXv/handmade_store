@@ -1,6 +1,5 @@
 package com.ua.teamchallenge.handmadestore.mapper;
 
-import com.ua.teamchallenge.handmadestore.config.MapStructConfig;
 import com.ua.teamchallenge.handmadestore.dto.CategoryDto;
 import com.ua.teamchallenge.handmadestore.model.Category;
 import org.mapstruct.Mapper;
