@@ -47,6 +47,12 @@ public class Item {
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name="superitem_id")
+    @JsonBackReference // Эта сторона не будет сериализована
+    private SuperItem superItem;
+
+
     //Discount can't be <0% and >100%
     public void setDiscount(int discount) {
         if (discount >= 0 && discount <= 100) {

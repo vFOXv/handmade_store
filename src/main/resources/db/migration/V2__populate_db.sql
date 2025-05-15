@@ -48,13 +48,20 @@ VALUES  (1, 'red'),
         (8, 'pink'),
         (9, 'coloring');
 
-INSERT INTO items(name, description, created_at, category_id, material_id, price, quantity, discount)
-VALUES  ('bear shaped candle', 'brown bear shaped candle', '2025-03-11', 5, 1, 12, 4,12),
-        ('pig shaped candle', 'pink pig shaped candle', '2025-03-13', 5, 1, 13, 5,15),
-        ('mint scented candle', 'scented candle with mint flavor', '2025-03-14', 5, 1, 6,10, 10),
-        ('Landscape with deer', 'large painting "Landscape with a deer"', '2025-03-15',2, 2, 7,45, 0),
-        ('kitchen knife', 'artistic kitchen knife', '2025-03-12', 3, 3, 30, 1,5),
-        ('curtains', 'pink curtains', CURRENT_DATE, 4, 4, 25, 2,0);
+INSERT INTO superitems(id,category_id, superitem_name)
+VALUES  (1, 5,'candle_1'),
+        (2, 5,'candle_2'),
+        (3, 2,'picture_1'),
+        (4, 3,'knife_1'),
+        (5, 4,'curtains_1');
+
+INSERT INTO items(name, description, created_at, category_id, material_id, superitem_id, price, quantity, discount)
+VALUES  ('bear shaped candle', 'brown bear shaped candle', '2025-03-11', 5, 1, 1,12, 4,12),
+        ('pig shaped candle', 'pink pig shaped candle', '2025-03-13', 5, 1, 2, 13, 5,15),
+        ('mint scented candle', 'scented candle with mint flavor', '2025-03-14', 5, 1, 2, 6,10, 10),
+        ('Landscape with deer', 'large painting "Landscape with a deer"', '2025-03-15',2, 2, 3, 7,45, 0),
+        ('kitchen knife', 'artistic kitchen knife', '2025-03-12', 3, 3, 4,30, 1,5),
+        ('curtains', 'pink curtains', CURRENT_DATE, 4, 4, 5,25, 2,0);
 
 INSERT INTO items_colors(item_id, color_id)
 VALUES  (1, 1),

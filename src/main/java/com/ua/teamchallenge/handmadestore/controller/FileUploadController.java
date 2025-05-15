@@ -1,9 +1,7 @@
-package com.ua.teamchallenge.handmadestore.config;
+package com.ua.teamchallenge.handmadestore.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -12,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @RestController("/upload")
+@CrossOrigin(origins = "http://localhost:4000", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS}, allowCredentials = "true")
 public class FileUploadController {
     // Папка для сохранения файлов
     private static final String UPLOAD_DIR = "C:/uploads/";

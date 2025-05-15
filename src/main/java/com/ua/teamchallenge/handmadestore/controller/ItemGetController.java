@@ -1,7 +1,9 @@
 package com.ua.teamchallenge.handmadestore.controller;
 
 import com.ua.teamchallenge.handmadestore.dto.ItemDto;
+import com.ua.teamchallenge.handmadestore.dto.SuperItemDto;
 import com.ua.teamchallenge.handmadestore.service.impl.ItemServiceImpl;
+import com.ua.teamchallenge.handmadestore.service.impl.SuperItemServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -13,8 +15,10 @@ import org.springframework.data.domain.Page;
 @RestController
 @RequestMapping("/api/get")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4000", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS}, allowCredentials = "true")
 public class ItemGetController {
     private final ItemServiceImpl itemService;
+    private final SuperItemServiceImpl superItemService;
 
     @GetMapping("/items")
     public PagedModel<ItemDto> findAllItems(@PageableDefault Pageable pageable) {
@@ -82,5 +86,10 @@ public class ItemGetController {
     @GetMapping("/price/drop")
     public Page<ItemDto> sortByPriceDrop(@PageableDefault Pageable pageable){
         return itemService.sortToPriceAllDrop(pageable);
+    }
+
+    @GetMapping("/superitems")
+    public PagedModel<SuperItemDto> findAllSuperItems(@PageableDefault Pageable pageable) {
+        return new PagedModel<>(superItemService.findAll(pageable));
     }
 }

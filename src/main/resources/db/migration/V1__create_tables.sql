@@ -41,6 +41,13 @@ CREATE TABLE IF NOT EXISTS colors(
 						color_name	VARCHAR(50) NOT NULL
 						);
 
+CREATE TABLE IF NOT EXISTS superitems(
+                        id BIGSERIAL PRIMARY KEY,
+                        category_id BIGINT NOT NULL,
+                        superitem_name	VARCHAR(50) NOT NULL,
+                        FOREIGN KEY(category_id) REFERENCES categories(id)
+                        );
+
 CREATE TABLE IF NOT EXISTS items(
 						id 		BIGSERIAL PRIMARY KEY,
 						name		VARCHAR(50) NOT NULL,
@@ -48,11 +55,13 @@ CREATE TABLE IF NOT EXISTS items(
                         created_at  DATE NOT NULL,
 						category_id BIGINT NOT NULL,
 						material_id BIGINT NOT NULL,
+                        superitem_id BIGINT NOT NULL,
 						price		MONEY NOT NULL,
                         quantity 	INT,
 						discount	INT DEFAULT 0 CHECK(discount >=0 AND discount <= 100) NOT NULL,
 						FOREIGN KEY(category_id) REFERENCES categories(id),
-						FOREIGN KEY(material_id) REFERENCES materials(id)
+						FOREIGN KEY(material_id) REFERENCES materials(id),
+                        FOREIGN KEY(superitem_id) REFERENCES superitems(id)
 						);
 
 CREATE TABLE items_colors(
