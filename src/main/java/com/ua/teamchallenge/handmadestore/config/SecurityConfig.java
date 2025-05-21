@@ -58,7 +58,8 @@ public class SecurityConfig {
                                         "/swagger-ui/**",
                                         "/api/r1/items",
                                         "/api/get/**",
-                                        "/api/set/**")
+                                        "/api/set/**",
+                                        "/api/filter/**" )
                                 .permitAll()
                                 .anyRequest().authenticated()
                 )

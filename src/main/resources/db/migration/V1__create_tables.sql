@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS superitems(
                         id BIGSERIAL PRIMARY KEY,
                         category_id BIGINT NOT NULL,
                         superitem_name	VARCHAR(50) NOT NULL,
+                        id_item_min_price BIGSERIAL,
                         FOREIGN KEY(category_id) REFERENCES categories(id)
                         );
 

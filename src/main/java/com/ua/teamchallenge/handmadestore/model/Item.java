@@ -61,4 +61,14 @@ public class Item {
             System.out.println("Invalid discount!!!");
         }
     }
+
+    //при добавлении item или изменении price, меняеться min price in superItem.
+    @PrePersist
+    @PreUpdate
+    public void syncSuperItemMinPrice() {
+        if (superItem != null) {
+            superItem.updateIdItemMinPrice();
+        }
+    }
 }
+

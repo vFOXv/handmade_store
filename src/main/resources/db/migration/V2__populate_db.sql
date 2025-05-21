@@ -48,12 +48,12 @@ VALUES  (1, 'red'),
         (8, 'pink'),
         (9, 'coloring');
 
-INSERT INTO superitems(id,category_id, superitem_name)
-VALUES  (1, 5,'candle_1'),
-        (2, 5,'candle_2'),
-        (3, 2,'picture_1'),
-        (4, 3,'knife_1'),
-        (5, 4,'curtains_1');
+INSERT INTO superitems(id,category_id, superitem_name, id_item_min_price)
+VALUES  (1, 5,'candle_1',12),
+        (2, 5,'candle_2', 6),
+        (3, 2,'picture_1', 7),
+        (4, 3,'knife_1', 30),
+        (5, 4,'curtains_1',25);
 
 INSERT INTO items(name, description, created_at, category_id, material_id, superitem_id, price, quantity, discount)
 VALUES  ('bear shaped candle', 'brown bear shaped candle', '2025-03-11', 5, 1, 1,12, 4,12),
